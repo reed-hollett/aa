@@ -31,7 +31,7 @@ export default function Splash({ onComplete }: { onComplete: () => void }) {
       transition={{ duration: 0.6 }}
       className="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center"
     >
-      <h1 className="relative z-10 text-[clamp(3.5rem,10vw,8.5rem)] font-normal leading-[0.9] tracking-tight text-center md:text-center text-left w-full px-4 md:px-0 md:w-auto mb-[-1.5rem] md:mb-[-2.5rem]">
+      <h1 className="relative z-10 text-[clamp(3.5rem,10vw,8.5rem)] font-normal leading-[0.9] tracking-tight text-center w-full px-4 md:px-0 mb-[-1.5rem] md:mb-[-2.5rem]">
         Atelier
       </h1>
 
@@ -50,7 +50,7 @@ export default function Splash({ onComplete }: { onComplete: () => void }) {
         </AnimatePresence>
       </div>
 
-      <h1 className="relative z-10 text-[clamp(3.5rem,10vw,8.5rem)] font-normal leading-[0.9] tracking-tight text-center md:text-center text-right w-full px-4 md:px-0 md:w-auto mt-[-1.5rem] md:mt-[-2.5rem]">
+      <h1 className="relative z-10 text-[clamp(3.5rem,10vw,8.5rem)] font-normal leading-[0.9] tracking-tight text-center w-full px-4 md:px-0 mt-[-1.5rem] md:mt-[-2.5rem]">
         Armbruster
       </h1>
     </motion.div>

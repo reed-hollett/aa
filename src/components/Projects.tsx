@@ -96,8 +96,8 @@ export default function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: (i % 4) * 0.1 }}
-            className="group cursor-pointer"
-            onClick={() => {
+            className={proj.inProgress ? "" : "group cursor-pointer"}
+            onClick={proj.inProgress ? undefined : () => {
               setSelectedProject(i);
               setCurrentSlide(0);
             }}
@@ -108,15 +108,22 @@ export default function Projects() {
                 alt={proj.title}
                 className="w-full h-auto block"
               />
-              <div className="absolute inset-0 bg-[#f4b4b0] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <span className="absolute top-3 left-3 w-[7px] h-[7px] bg-[#2a2a2a]" />
-                <span className="absolute top-3 right-3 w-[7px] h-[7px] bg-[#2a2a2a]" />
-                <span className="absolute bottom-3 left-3 w-[7px] h-[7px] bg-[#2a2a2a]" />
-                <span className="absolute bottom-3 right-3 w-[7px] h-[7px] bg-[#2a2a2a]" />
-              </div>
+              {!proj.inProgress && (
+                <>
+                  <div className="absolute inset-0 bg-[#f4b4b0] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <span className="absolute top-3 left-3 w-[7px] h-[7px] bg-[#2a2a2a]" />
+                    <span className="absolute top-3 right-3 w-[7px] h-[7px] bg-[#2a2a2a]" />
+                    <span className="absolute bottom-3 left-3 w-[7px] h-[7px] bg-[#2a2a2a]" />
+                    <span className="absolute bottom-3 right-3 w-[7px] h-[7px] bg-[#2a2a2a]" />
+                  </div>
+                </>
+              )}
             </div>
-            <p className="text-[14px]">{proj.title}</p>
+            <p className="text-[14px]">
+              {proj.title}
+              {proj.inProgress && <span className="text-muted italic"> — In Progress</span>}
+            </p>
           </motion.div>
         ))}
       </div>
@@ -129,7 +136,7 @@ export default function Projects() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[100] flex flex-col"
+            className="fixed inset-0 z-[102] flex flex-col"
           >
             <div className="absolute inset-0 bg-white/80 backdrop-blur-xl" />
 

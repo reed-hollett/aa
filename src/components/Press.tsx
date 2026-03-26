@@ -24,9 +24,9 @@ export default function Press() {
       </p>
 
       {/* Table header */}
-      <div className="grid grid-cols-[1fr_1fr_2fr] text-[14px] text-muted pb-3 border-b border-black">
+      <div className="grid grid-cols-[1fr_2fr] md:grid-cols-[1fr_1fr_2fr] text-[14px] text-muted pb-3 border-b border-black">
         <span>Publication</span>
-        <span>Date</span>
+        <span className="hidden md:inline">Date</span>
         <span>Headline</span>
       </div>
 
@@ -38,12 +38,12 @@ export default function Press() {
             href={entry.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="grid grid-cols-[1fr_1fr_2fr] text-[14px] py-2 border-b border-black hover:text-muted transition-colors cursor-pointer"
+            className="grid grid-cols-[1fr_2fr] md:grid-cols-[1fr_1fr_2fr] text-[14px] py-2 border-b border-black hover:text-muted transition-colors cursor-pointer"
             onMouseEnter={() => setHoveredIndex(i)}
             onMouseLeave={() => setHoveredIndex(null)}
           >
             <span>{entry.publication}</span>
-            <span>{entry.date}</span>
+            <span className="hidden md:inline">{entry.date}</span>
             <span>&ldquo;{entry.headline}&rdquo;</span>
           </a>
         ))}

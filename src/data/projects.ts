@@ -6,6 +6,7 @@ export interface Project {
   thumbnail: string;
   images: string[];
   photographer: string | null;
+  inProgress?: boolean;
 }
 
 const SQ = "https://images.squarespace-cdn.com/content/v1/51215fbae4b04a9f6b5db308";
@@ -170,6 +171,7 @@ export const projects: Project[] = [
     thumbnail: `${SQ}/1610756405378-MQASHJL20SIAMUJNFZPH/Atelier-Armbruster-Tribecca-Apartment-In-Progress.jpg`,
     images: [`${SQ}/1610756405378-MQASHJL20SIAMUJNFZPH/Atelier-Armbruster-Tribecca-Apartment-In-Progress.jpg`],
     photographer: null,
+    inProgress: true,
   },
   {
     title: "First Avenue Apartment",
@@ -177,6 +179,7 @@ export const projects: Project[] = [
     thumbnail: `${SQ}/1610756452171-I9VWG6I71YAK6QYZ25ZH/Atelier-Armbruster-First-Avenue-Apartment-In-Progress.jpg`,
     images: [`${SQ}/1610756452171-I9VWG6I71YAK6QYZ25ZH/Atelier-Armbruster-First-Avenue-Apartment-In-Progress.jpg`],
     photographer: null,
+    inProgress: true,
   },
   {
     title: "Dean Street Brooklyn Apartment",
@@ -184,6 +187,7 @@ export const projects: Project[] = [
     thumbnail: `${SQ}/d6cfd95c-b08f-4e57-b12a-fccc330488bc/Atelier-Armbruster-Dean-Street-Brooklyn-Apartment.jpg`,
     images: [`${SQ}/d6cfd95c-b08f-4e57-b12a-fccc330488bc/Atelier-Armbruster-Dean-Street-Brooklyn-Apartment.jpg`],
     photographer: null,
+    inProgress: true,
   },
   // Houses & Townhouses
   {
@@ -284,6 +288,7 @@ export const projects: Project[] = [
     thumbnail: `${SQ}/16275331-5f3e-4133-9041-10e39265b191/Atelier-Armbruster-Old-Trail-Road.jpg`,
     images: [`${SQ}/16275331-5f3e-4133-9041-10e39265b191/Atelier-Armbruster-Old-Trail-Road.jpg`],
     photographer: null,
+    inProgress: true,
   },
   {
     title: "Barn Lane Bridgehampton House",
@@ -291,6 +296,7 @@ export const projects: Project[] = [
     thumbnail: `${SQ}/617d3c9b-66ba-40cc-9095-979ed9e88f76/Atelier-Armbruster-Barn-Lane-Bridgehampton.jpg`,
     images: [`${SQ}/617d3c9b-66ba-40cc-9095-979ed9e88f76/Atelier-Armbruster-Barn-Lane-Bridgehampton.jpg`],
     photographer: null,
+    inProgress: true,
   },
   {
     title: "East Hampton Residence",
@@ -309,6 +315,7 @@ export const projects: Project[] = [
     thumbnail: `${SQ}/1621353072752-ALY6FF937O6LSER4UFVW/Atelier-Armbruster-Cambridge-Place-Residence.jpg`,
     images: [`${SQ}/1621353072752-ALY6FF937O6LSER4UFVW/Atelier-Armbruster-Cambridge-Place-Residence.jpg`],
     photographer: null,
+    inProgress: true,
   },
   {
     title: "Werksviertel German Apartment Complex",
@@ -316,6 +323,7 @@ export const projects: Project[] = [
     thumbnail: `${SQ}/f1ef5b61-ad64-4878-ae87-2a50eb0b88e9/Atelier-Armbruster-Werksviertel.jpg`,
     images: [`${SQ}/f1ef5b61-ad64-4878-ae87-2a50eb0b88e9/Atelier-Armbruster-Werksviertel.jpg`],
     photographer: null,
+    inProgress: true,
   },
 ];
 

@@ -27,13 +27,13 @@ export default function Contact() {
         <div className="space-y-6 text-[14px]">
           {/* Address */}
           <div>
-            <p className="text-muted mb-1">Address</p>
+            <p className="text-muted">Address</p>
             <p>22 West 27th Street, 4th Floor, New York, NY 10001</p>
           </div>
 
           {/* Phone */}
           <div>
-            <p className="text-muted mb-1">Phone</p>
+            <p className="text-muted">Phone</p>
             <a
               href="tel:+12126529991"
               className="hover:text-muted transition-colors"
@@ -44,7 +44,7 @@ export default function Contact() {
 
           {/* Email */}
           <div>
-            <p className="text-muted mb-1">Email</p>
+            <p className="text-muted">Email</p>
             <a
               href="mailto:hello@atelierarmbruster.com"
               className="hover:text-muted transition-colors"

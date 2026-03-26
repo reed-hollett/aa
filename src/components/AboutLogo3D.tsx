@@ -98,7 +98,7 @@ function Scene() {
 
 export default function AboutLogo3D() {
   return (
-    <div className="w-full h-[50vh] md:h-[60vh] flex items-center justify-center">
+    <div className="w-full h-[40vh] md:h-[50vh] flex items-center justify-center">
       <Canvas
         camera={{ position: [0, 0, 5], fov: 40 }}
         gl={{ antialias: true, alpha: true }}

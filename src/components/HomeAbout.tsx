@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 
 const AboutLogo3D = dynamic(() => import("@/components/AboutLogo3D"), {
   ssr: false,
-  loading: () => <div className="w-full h-[50vh] md:h-[60vh]" />,
+  loading: () => <div className="w-full h-[40vh] md:h-[50vh]" />,
 });
 
 export default function HomeAbout() {

@@ -117,7 +117,7 @@ export default function Navigation() {
 
         <a
           href="/?skipSplash=1"
-          className="text-center justify-self-center"
+          className="text-center justify-self-center whitespace-nowrap"
         >
           Atelier Armbruster
         </a>

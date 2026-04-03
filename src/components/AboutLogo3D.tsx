@@ -2,7 +2,7 @@
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Edges } from "@react-three/drei";
-import { useRef, useMemo, Suspense } from "react";
+import { useRef, useMemo, useState, useEffect, Suspense } from "react";
 import * as THREE from "three";
 
 // SVG "A" path from A.svg, flipped & scaled to Three.js coordinates
@@ -51,7 +51,7 @@ function createAShape(): THREE.Shape {
   return shape;
 }
 
-function WireframeA() {
+function WireframeA({ color }: { color: string }) {
   const geometry = useMemo(() => {
     const shape = createAShape();
     const geo = new THREE.ExtrudeGeometry(shape, {
@@ -65,7 +65,7 @@ function WireframeA() {
   return (
     <mesh geometry={geometry}>
       <meshBasicMaterial transparent opacity={0} />
-      <Edges threshold={15} color="#1a1a1a" lineWidth={1} />
+      <Edges threshold={15} color={color} lineWidth={1} />
     </mesh>
   );
 }
@@ -73,7 +73,7 @@ function WireframeA() {
 // Base rotation matching the reference isometric angle
 const BASE_ROTATION: [number, number, number] = [0.55, 0.6, -0.1];
 
-function Scene() {
+function Scene({ color }: { color: string }) {
   const groupRef = useRef<THREE.Group>(null);
   const { viewport } = useThree();
 
@@ -91,12 +91,25 @@ function Scene() {
 
   return (
     <group ref={groupRef} scale={scale} rotation={BASE_ROTATION} position={[0, 0.4, 0]}>
-      <WireframeA />
+      <WireframeA color={color} />
     </group>
   );
 }
 
 export default function AboutLogo3D() {
+  const [color, setColor] = useState("#1a1a1a");
+
+  useEffect(() => {
+    const update = () => {
+      const fg = getComputedStyle(document.documentElement).getPropertyValue("--color-foreground").trim();
+      if (fg) setColor(fg);
+    };
+    update();
+    const observer = new MutationObserver(update);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="w-full h-[40vh] md:h-[50vh] flex items-center justify-center">
       <Canvas
@@ -105,7 +118,7 @@ export default function AboutLogo3D() {
         style={{ background: "transparent" }}
       >
         <Suspense fallback={null}>
-          <Scene />
+          <Scene color={color} />
         </Suspense>
       </Canvas>
     </div>

@@ -30,7 +30,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="pt-20 md:pt-40 px-6 md:px-0 flex justify-center">
+    <section className="pt-36 md:pt-40 px-6 md:px-0 flex justify-center">
       <div className="w-full md:w-[65vw] max-w-[935px] relative aspect-[3/2]">
         <AnimatePresence mode="popLayout">
           <motion.img

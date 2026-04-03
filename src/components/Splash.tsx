@@ -31,10 +31,9 @@ export default function Splash({ onComplete }: { onComplete: () => void }) {
       const armbrusterRect = armbrusterRef.current.getBoundingClientRect();
       const vw = window.innerWidth;
 
-      // Move "Atelier" so its left edge is at 20px
-      setAtelierX(20 - atelierRect.left);
-      // Move "Armbruster" so its right edge is at vw - 20px
-      setArmbrusterX(vw - 20 - armbrusterRect.right);
+      const pad = vw >= 768 ? 40 : 20;
+      setAtelierX(pad - atelierRect.left);
+      setArmbrusterX(vw - pad - armbrusterRect.right);
     }
   }, []);
 

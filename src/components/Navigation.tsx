@@ -74,7 +74,7 @@ export default function Navigation() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.4, delay: 0.3 }}
         style={{ background: `linear-gradient(to bottom, var(--color-background) 0%, var(--color-background) 50%, transparent 100%)` }}
-        className="fixed top-0 left-0 right-0 z-[101] grid grid-cols-3 items-center px-3 md:px-5 pt-3 pb-14 text-[14px]"
+        className="fixed top-0 left-0 right-0 z-[101] grid grid-cols-3 items-center px-5 md:px-5 pt-5 md:pt-3 pb-14 text-[14px]"
       >
         {/* Time + dark mode toggle – hidden on mobile */}
         <span className="hidden md:inline-flex items-center gap-1.5">

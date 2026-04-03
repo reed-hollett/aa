@@ -37,13 +37,13 @@ function HomeContent() {
           <div className="flex justify-center px-6 md:px-10 pb-16 md:pb-24">
             <a
               href="/projects"
-              className="bg-border text-foreground px-5 py-3 text-[14px] font-normal hover:opacity-80 transition-colors"
+              className="border border-foreground text-foreground px-5 py-3 text-[14px] font-normal hover:opacity-80 transition-colors"
             >
               View projects
             </a>
             <a
               href="/contact"
-              className="bg-foreground text-background px-5 py-3 text-[14px] font-normal hover:opacity-80 transition-colors"
+              className="bg-foreground text-background px-5 py-3 text-[14px] font-normal hover:opacity-80 transition-colors ml-3"
             >
               Get in touch
             </a>

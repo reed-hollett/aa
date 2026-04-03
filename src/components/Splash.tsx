@@ -1,57 +1,131 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { projects } from "@/data/projects";
 
-const splashImages = [
-  "/images/hero.jpg",
-  "/images/project-1.jpg",
-  "/images/project-2.jpg",
-];
+const splashImages = projects
+  .filter((p) => !p.inProgress && p.images.length > 1)
+  .flatMap((p) =>
+    p.images.filter(
+      (img) =>
+        !img.toLowerCase().includes("collage") &&
+        !img.toLowerCase().includes("two-image") &&
+        !img.toLowerCase().includes("two+image")
+    )
+  )
+  .slice(0, 12);
 
 export default function Splash({ onComplete }: { onComplete: () => void }) {
-  const [currentImage, setCurrentImage] = useState(0);
+  const [currentImg, setCurrentImg] = useState(0);
+  const [split, setSplit] = useState(false);
+  const atelierRef = useRef<HTMLSpanElement>(null);
+  const armbrusterRef = useRef<HTMLSpanElement>(null);
+  const [atelierX, setAtelierX] = useState(0);
+  const [armbrusterX, setArmbrusterX] = useState(0);
 
   useEffect(() => {
-    if (currentImage < splashImages.length - 1) {
-      const timer = setTimeout(() => {
-        setCurrentImage((prev) => prev + 1);
-      }, 1000);
-      return () => clearTimeout(timer);
-    } else {
-      const timer = setTimeout(onComplete, 1000);
-      return () => clearTimeout(timer);
+    // Calculate how far each word needs to move
+    if (atelierRef.current && armbrusterRef.current) {
+      const atelierRect = atelierRef.current.getBoundingClientRect();
+      const armbrusterRect = armbrusterRef.current.getBoundingClientRect();
+      const vw = window.innerWidth;
+
+      // Move "Atelier" so its left edge is at 20px
+      setAtelierX(20 - atelierRect.left);
+      // Move "Armbruster" so its right edge is at vw - 20px
+      setArmbrusterX(vw - 20 - armbrusterRect.right);
     }
-  }, [currentImage, onComplete]);
+  }, []);
+
+  useEffect(() => {
+    const splitTimer = setTimeout(() => setSplit(true), 1200);
+
+    // Start flipping after the split animation finishes
+    let interval: ReturnType<typeof setInterval>;
+    const flipStart = setTimeout(() => {
+      interval = setInterval(() => {
+        setCurrentImg((prev) => {
+          if (prev >= splashImages.length - 1) return prev;
+          return prev + 1;
+        });
+      }, 250);
+    }, 2000);
+
+    const done = setTimeout(onComplete, 2000 + splashImages.length * 250 + 600);
+
+    return () => {
+      clearTimeout(splitTimer);
+      clearTimeout(flipStart);
+      clearInterval(interval);
+      clearTimeout(done);
+    };
+  }, [onComplete]);
 
   return (
     <motion.div
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.6 }}
-      className="fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center"
+      exit={{ y: "-100%" }}
+      transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+      className="fixed inset-0 z-[100] bg-foreground flex items-center justify-center"
     >
-      <h1 className="relative z-10 text-[clamp(3.5rem,10vw,8.5rem)] font-normal leading-[0.9] tracking-tight text-center w-full px-4 md:px-0 mb-[-1.5rem] md:mb-[-2.5rem]">
+      {/* Atelier */}
+      <motion.span
+        ref={atelierRef}
+        initial={{ opacity: 0, y: 8 }}
+        animate={
+          split
+            ? { opacity: 1, y: 0, x: atelierX }
+            : { opacity: 1, y: 0, x: 0 }
+        }
+        transition={
+          split
+            ? { duration: 0.8, ease: [0.76, 0, 0.24, 1] }
+            : { duration: 0.8, delay: 0.3, ease: "easeOut" }
+        }
+        className="text-background text-[clamp(1.5rem,4vw,2.5rem)] tracking-wide font-sans z-10"
+      >
         Atelier
-      </h1>
+      </motion.span>
 
-      <div className="relative w-[90vw] md:w-[65vw] max-w-[935px] aspect-[3/2]">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={currentImage}
-            src={splashImages[currentImage]}
-            alt="Atelier Armbruster"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        </AnimatePresence>
-      </div>
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+        className="text-background text-[clamp(1.5rem,4vw,2.5rem)] font-sans"
+      >
+        &nbsp;
+      </motion.span>
 
-      <h1 className="relative z-10 text-[clamp(3.5rem,10vw,8.5rem)] font-normal leading-[0.9] tracking-tight text-center w-full px-4 md:px-0 mt-[-1.5rem] md:mt-[-2.5rem]">
+      {/* Center image */}
+      {split && (
+        <motion.img
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          src={splashImages[currentImg]}
+          alt=""
+          className="absolute w-[70vw] md:w-[45vw] max-w-[600px] aspect-[3/2] object-cover"
+        />
+      )}
+
+      {/* Armbruster */}
+      <motion.span
+        ref={armbrusterRef}
+        initial={{ opacity: 0, y: 8 }}
+        animate={
+          split
+            ? { opacity: 1, y: 0, x: armbrusterX }
+            : { opacity: 1, y: 0, x: 0 }
+        }
+        transition={
+          split
+            ? { duration: 0.8, ease: [0.76, 0, 0.24, 1] }
+            : { duration: 0.8, delay: 0.3, ease: "easeOut" }
+        }
+        className="text-background text-[clamp(1.5rem,4vw,2.5rem)] tracking-wide font-sans z-10"
+      >
         Armbruster
-      </h1>
+      </motion.span>
     </motion.div>
   );
 }

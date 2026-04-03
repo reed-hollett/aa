@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState, useCallback } from "react";
+import { Suspense, useState, useCallback, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Navigation from "@/components/Navigation";
@@ -13,6 +13,7 @@ function HomeContent() {
   const searchParams = useSearchParams();
   const skip = searchParams.get("skipSplash") === "1";
   const [showSplash, setShowSplash] = useState(!skip);
+  const [sectionDark, setSectionDark] = useState(false);
 
   const handleSplashComplete = useCallback(() => {
     setShowSplash(false);
@@ -29,10 +30,10 @@ function HomeContent() {
         animate={showSplash ? { opacity: 0 } : { opacity: 1 }}
         transition={{ duration: 1.2, ease: "easeOut" }}
       >
-        <Navigation />
+        <Navigation sectionDark={sectionDark} />
         <main>
           <Hero />
-          <About />
+          <About onDarkChange={setSectionDark} />
           {/* CTA buttons */}
           <div className="flex justify-center px-6 md:px-10 pb-16 md:pb-24">
             <a

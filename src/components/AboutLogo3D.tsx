@@ -2,7 +2,7 @@
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Edges } from "@react-three/drei";
-import { useRef, useMemo, useState, useEffect, Suspense } from "react";
+import { useRef, useMemo, useState, useEffect, useCallback, Suspense } from "react";
 import * as THREE from "three";
 
 // SVG "A" path from A.svg, flipped & scaled to Three.js coordinates
@@ -73,14 +73,17 @@ function WireframeA({ color }: { color: string }) {
 // Base rotation matching the reference isometric angle
 const BASE_ROTATION: [number, number, number] = [0.55, 0.6, -0.1];
 
-function Scene({ color }: { color: string }) {
+function Scene({ color, drag }: { color: string; drag: { x: number; y: number } }) {
   const groupRef = useRef<THREE.Group>(null);
   const { viewport } = useThree();
 
   useFrame(({ pointer }) => {
     if (!groupRef.current) return;
-    const targetY = BASE_ROTATION[1] + pointer.x * 0.4;
-    const targetX = BASE_ROTATION[0] - pointer.y * 0.3;
+    // Use drag offset if dragging, otherwise follow pointer
+    const inputX = drag.x !== 0 || drag.y !== 0 ? drag.x : pointer.x;
+    const inputY = drag.x !== 0 || drag.y !== 0 ? drag.y : pointer.y;
+    const targetY = BASE_ROTATION[1] + inputX * 0.4;
+    const targetX = BASE_ROTATION[0] - inputY * 0.3;
     groupRef.current.rotation.y +=
       (targetY - groupRef.current.rotation.y) * 0.05;
     groupRef.current.rotation.x +=
@@ -98,6 +101,9 @@ function Scene({ color }: { color: string }) {
 
 export default function AboutLogo3D() {
   const [color, setColor] = useState("#1a1a1a");
+  const [drag, setDrag] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const dragging = useRef(false);
 
   useEffect(() => {
     const update = () => {
@@ -110,15 +116,45 @@ export default function AboutLogo3D() {
     return () => observer.disconnect();
   }, []);
 
+  const getPos = useCallback((clientX: number, clientY: number) => {
+    const el = containerRef.current;
+    if (!el) return { x: 0, y: 0 };
+    const rect = el.getBoundingClientRect();
+    return {
+      x: ((clientX - rect.left) / rect.width) * 2 - 1,
+      y: -(((clientY - rect.top) / rect.height) * 2 - 1),
+    };
+  }, []);
+
+  const onPointerDown = useCallback(() => { dragging.current = true; }, []);
+  const onPointerUp = useCallback(() => { dragging.current = false; }, []);
+  const onPointerMove = useCallback((e: React.PointerEvent) => {
+    if (!dragging.current) return;
+    setDrag(getPos(e.clientX, e.clientY));
+  }, [getPos]);
+  const onTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!dragging.current) return;
+    const t = e.touches[0];
+    setDrag(getPos(t.clientX, t.clientY));
+  }, [getPos]);
+
   return (
-    <div className="w-full h-[30vh] md:h-[35vh] flex items-center justify-center">
+    <div
+      ref={containerRef}
+      className="w-full h-[30vh] md:h-[35vh] flex items-center justify-center cursor-grab active:cursor-grabbing touch-none"
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+      onPointerLeave={onPointerUp}
+      onPointerMove={onPointerMove}
+      onTouchMove={onTouchMove}
+    >
       <Canvas
         camera={{ position: [0, 0, 5], fov: 40 }}
         gl={{ antialias: true, alpha: true }}
         style={{ background: "transparent" }}
       >
         <Suspense fallback={null}>
-          <Scene color={color} />
+          <Scene color={color} drag={drag} />
         </Suspense>
       </Canvas>
     </div>

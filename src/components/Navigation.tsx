@@ -19,7 +19,7 @@ function isNightInNYC(): boolean {
   return hour >= 19 || hour < 6;
 }
 
-export default function Navigation() {
+export default function Navigation({ sectionDark }: { sectionDark?: boolean }) {
   const pathname = usePathname();
   const [time, setTime] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -73,15 +73,20 @@ export default function Navigation() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.4, delay: 0.3 }}
-        style={{ background: `linear-gradient(to bottom, var(--color-background) 0%, var(--color-background) 50%, transparent 100%)` }}
+        style={{
+          background: sectionDark
+            ? `linear-gradient(to bottom, #0a0a0a 0%, #0a0a0a 50%, transparent 100%)`
+            : `linear-gradient(to bottom, var(--color-background) 0%, var(--color-background) 50%, transparent 100%)`,
+          color: sectionDark ? "#f0f0f0" : undefined,
+          transition: "background 0.7s ease, color 0.7s ease",
+        }}
         className="fixed top-0 left-0 right-0 z-[101] grid grid-cols-3 items-center px-5 md:px-5 pt-5 md:pt-3 pb-14 text-[14px]"
       >
         {/* Time + dark mode toggle – hidden on mobile */}
         <span className="hidden md:inline-flex items-center gap-1.5">
-          {time} <span className="text-muted">NYC</span>
           <button
             onClick={toggleDark}
-            className="-ml-0.5 hover:opacity-60 transition-opacity"
+            className="hover:opacity-60 transition-opacity"
             aria-label="Toggle dark mode"
           >
             <AnimatePresence mode="wait">
@@ -111,6 +116,7 @@ export default function Navigation() {
               )}
             </AnimatePresence>
           </button>
+          {time} <span className="text-muted">NYC</span>
         </span>
         {/* Empty col-1 on mobile to keep title centered */}
         <span className="md:hidden" />
@@ -165,7 +171,8 @@ export default function Navigation() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[100] bg-background flex flex-col"
+            className="fixed inset-0 z-[100] flex flex-col"
+            style={{ backgroundColor: "var(--color-background)" }}
           >
             {/* Spacer for nav height */}
             <div className="h-20" />

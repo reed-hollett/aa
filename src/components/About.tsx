@@ -77,7 +77,7 @@ export default function About() {
               transition={{ duration: 0.5 }}
               className="text-center"
             >
-              <div className="bg-[#f0f0f0] mb-1">
+              <div className="bg-border mb-1">
                 <img
                   src={member.image}
                   alt={member.name}

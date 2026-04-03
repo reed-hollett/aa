@@ -75,7 +75,7 @@ export default function Projects() {
                 onClick={() => setActiveFilter(filter.value)}
                 className={`transition-colors ${
                   activeFilter === filter.value
-                    ? "text-foreground"
+                    ? "text-foreground italic"
                     : "text-foreground hover:text-muted"
                 }`}
               >
@@ -138,7 +138,7 @@ export default function Projects() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[102] flex flex-col"
           >
-            <div className="absolute inset-0 bg-white/80 backdrop-blur-xl" />
+            <div className="absolute inset-0 bg-background/80 backdrop-blur-xl" />
 
             <div className="relative z-10 flex items-center justify-between px-6 md:px-10 py-5 text-[14px]">
               <span>

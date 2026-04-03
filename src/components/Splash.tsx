@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 
 const splashImages = [
   "/images/hero.jpg",
-  "/images/hero-2.jpg",
   "/images/project-1.jpg",
   "/images/project-2.jpg",
 ];
@@ -29,13 +28,13 @@ export default function Splash({ onComplete }: { onComplete: () => void }) {
     <motion.div
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6 }}
-      className="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center"
+      className="fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center"
     >
       <h1 className="relative z-10 text-[clamp(3.5rem,10vw,8.5rem)] font-normal leading-[0.9] tracking-tight text-center w-full px-4 md:px-0 mb-[-1.5rem] md:mb-[-2.5rem]">
         Atelier
       </h1>
 
-      <div className="relative w-[90vw] md:w-[65vw] max-w-[935px]">
+      <div className="relative w-[90vw] md:w-[65vw] max-w-[935px] aspect-[3/2]">
         <AnimatePresence mode="wait">
           <motion.img
             key={currentImage}
@@ -45,7 +44,7 @@ export default function Splash({ onComplete }: { onComplete: () => void }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="w-full h-auto block"
+            className="absolute inset-0 w-full h-full object-cover"
           />
         </AnimatePresence>
       </div>

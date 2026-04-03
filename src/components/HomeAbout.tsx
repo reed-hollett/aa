@@ -38,7 +38,7 @@ export default function HomeAbout() {
         transition={{ duration: 0.8 }}
         className="mt-16 md:mt-24 grid grid-cols-2 gap-0 max-w-2xl mx-auto"
       >
-        <div className="bg-[#d9d9d9] p-4 flex items-start">
+        <div className="bg-border p-4 flex items-start">
           <p className="text-[14px] leading-snug">
             Born and raised in Germany, Yaiza Armbruster began her career
             studying architecture and engineering at the Technical University of

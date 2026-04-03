@@ -1,15 +1,30 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Suisse Intl";
+  src: url("/fonts/SuisseIntlTrial-Book.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
   --color-background: #ffffff;
   --color-foreground: #0a0a0a;
   --color-muted: #ababab;
   --color-border: #e5e5e5;
-  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-sans: "Suisse Intl", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+html.dark {
+  --color-background: #0a0a0a;
+  --color-foreground: #f0f0f0;
+  --color-muted: #666666;
+  --color-border: #2a2a2a;
 }
 
 body {
@@ -17,6 +32,7 @@ body {
   color: var(--color-foreground);
   font-family: var(--font-sans);
   overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* Custom cursor for interactive elements */
